@@ -1,0 +1,46 @@
+CREATE TABLE libraryuser (
+  User_ID INTEGER PRIMARY KEY UNIQUE NOT NULL);
+
+CREATE TABLE library (
+  Library_ID INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  LibraryName CHAR(50) NOT NULL);
+
+CREATE TABLE librarycard (
+  Card_ID INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  User_ID INTEGER REFERENCES libraryuser(User_ID),
+  Library_ID INTEGER REFERENCES library(Library_ID),
+  LibraryCardNumber CHAR(16) NOT NULL,
+  LibraryCardPIN CHAR(4) NOT NULL);
+
+CREATE TABLE books (
+  Book_ID INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  Card_ID INTEGER REFERENCES librarycard(Card_ID),
+  Library_ID INTEGER REFERENCES library(Library_ID),
+  BookTitle VARCHAR(100) NOT NULL
+  BookAuthor VARCHAR(100) NOT NULL
+  BookGenre VARCHAR(50) NOT NULL
+  BookFormat VARCHAR(50) NOT NULL
+  BookDuration VARCHAR(10)
+  BookEdition VARCHAR(10) NOT NULL
+  BookNarrator VARCHAR(100)
+  BookPublisher VARCHAR(100) NOT NULL
+  BookImprint VARCHAR(100) NOT NULL
+  BookReleaseDate DATE NOT NULL
+  BookAudience VARCHAR(50) NOT NULL 
+  BookSupport VARCHAR(50) NOT NULL a
+  BookRating CHAR(5) NOT NULL);
+
+CREATE TABLE userloans (
+  Loan_ID INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  User_ID INTEGER REFERENCES libraryuser(User_ID),
+  Book_ID INTEGER REFERENCES books(Book_ID));
+
+CREATE TABLE userholds (
+  Hold_ID INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  User_ID INTEGER REFERENCES libraryuser(User_ID),
+  Book_ID INTEGER REFERENCES books(Book_ID));
+
+CREATE TABLE usertags (
+  Tag_ID INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  User_ID INTEGER REFERENCES libraryuser(User_ID),
+  Book_ID INTEGER REFERENCES books(Book_ID));
